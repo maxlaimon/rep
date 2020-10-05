@@ -1,5 +1,5 @@
 class MyError(Exception):
-	def __init(self, text):
+	def __init__(self, text):
 		self.txt = text
 
 a = input("type a positive integer: ")
