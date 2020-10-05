@@ -23,3 +23,4 @@ with open("3.txt", "w") as F:
 with open("3.txt", "r") as F:
 	for line in F:
 		print(line.strip())
+
