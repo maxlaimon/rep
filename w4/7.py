@@ -8,17 +8,17 @@ def logger(file):
 		@wraps(f)
 		def wrapper(*args, **kwargs):
 			start = time.time()
-			f(*args, **kwargs)
+			returned = f(*args, **kwargs)
 			stop = time.time()
 			timeinwork = stop - start
 			start, stop = datetime.fromtimestamp(start), datetime.fromtimestamp(stop)
-			returned = f(*args, **kwargs) if f(*args, **kwargs) is not None else '-'
+			returned = '-' if returned == None else returned
 
 			with open(file, "w") as log:
 				log.write(
 				"called at {}\narguments: {}\nreturned: {}\nended at: {}\nexecution time:{}\n".format(start, args, returned, stop, timeinwork))
 
-			return f(*args, **kwargs)
+			return returned
 		return wrapper
 	return dec
 
