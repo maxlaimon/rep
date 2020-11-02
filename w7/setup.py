@@ -1,7 +1,7 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+#with open("README.md", "r") as fh:
+#    long_description = fh.read()
 
 setuptools.setup(
     name="example-pkg-maxlaimon",
@@ -9,7 +9,7 @@ setuptools.setup(
     author="maxlaimon",
     author_email="nikitmk@yandex.ru",
     description="A small example package",
-    long_description=long_description,
+#    long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/maxlaimon/rep/w7",
     packages=setuptools.find_packages(),
