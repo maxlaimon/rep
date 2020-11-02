@@ -3,9 +3,8 @@ from my_mathematics.math import MyMath, MyComplexMath
 from my_mathematics.linear_algebra import Vector
 import cmath
 import pytest
-import numpy as np
 
-
+#math tests
 @pytest.mark.parametrize('num',[(4),(0),(-1)])
 def test_sin(num):
     assert MyMath.sin(num) == math.sin(num)
@@ -19,59 +18,28 @@ def test_pi():
 def test_sqrt(num):
     assert MyMath.sqrt(num) == math.sqrt(num)
 
-
+#cmath tests
 @pytest.mark.parametrize("num",[(-2),(-9),(0),(-1)])
 def test_sqrt_complex(num):
     assert str(MyComplexMath.sqrt(num)) == str(cmath.sqrt(num))
 
-
-@pytest.mark.parametrize("v1,v2",[([1,2,3],[3,4,5]),([-1,0,0],[0,1,0]),([0,0,0],[0,0,0])])
-def test_Vector_add(v1,v2):
-
-    numpy_array_1 = np.array(v1)
-    numpy_array_2 = np.array(v2)
-    vect1=Vector(','.join(map(str,v1)))
-    vect2=Vector(','.join(map(str,v2)))
-
-    a=str(numpy_array_1+numpy_array_2)
-    a=list(a[1:-1].split(' '))
-    a=list(el for el in a if el!='')
-    assert str(vect1+vect2) == ','.join(a)
+#vector tests
+#inp - input, exp - expected
+@pytest.mark.parametrize('inp, exp',[(Vector(1, 2, 3) + Vector(3, 4, 5), Vector(4, 6, 8)), (Vector(0, 0, 1) + Vector(1, 1, 0), Vector(1, 1, 1))])
+def test_vector_add(inp, exp):
+    assert inp == exp
 
 
-@pytest.mark.parametrize("v1,v2",[([1,2,3],[3,4,5]),([-1,0,0],[0,1,0]),([0,0,0],[0,0,0])])
-def test_Vector_sub(v1,v2):
-
-    numpy_array_1 = np.array(v1)
-    numpy_array_2 = np.array(v2)
-    vect1=Vector(','.join(map(str,v1)))
-    vect2=Vector(','.join(map(str,v2)))
-
-    a=str(numpy_array_1-numpy_array_2)
-    a=list(a[1:-1].split(' '))
-    a=list(el for el in a if el!='')
-    assert str(vect1-vect2) == ','.join(a)
+@pytest.mark.parametrize('inp, exp',[(Vector(1, 2, 3) - Vector(3, 4, 5), Vector(-2, -2, -2)), (Vector(0, 0, 1) - Vector(1, 1, 0), Vector(-1, -1, 1))])
+def test_vector_sub(inp, exp):
+    assert inp == exp
 
 
-@pytest.mark.parametrize("v1,v2",[([1,2,3],[3,4,5]),([-1,0,0],[0,1,0]),([0,0,0],[0,0,0])])
-def test_Vector_mul(v1,v2):
+@pytest.mark.parametrize('inp, exp',[(Vector(1, 2, 3)&Vector(3, 2, 1), Vector(-4, 8, -4)), (Vector(0, 0, 1)&Vector(1, 1, 0), Vector(-1, 1, 0))])
+def test_vector_and(inp, exp):
+    assert inp == exp
 
-    numpy_array_1 = np.array(v1)
-    numpy_array_2 = np.array(v2)
-    vect1=Vector(','.join(map(str,v1)))
-    vect2=Vector(','.join(map(str,v2)))
 
-    assert vect1*vect2 == np.sum(numpy_array_1*numpy_array_2)
-
-@pytest.mark.parametrize("v1,v2",[([1,2,3],[3,4,5]),([-1,0,0],[0,1,0]),([0,0,0],[0,0,0])])
-def test_Vector_and(v1,v2):
-
-    numpy_array_1 = np.array(v1)
-    numpy_array_2 = np.array(v2)
-    vect1=Vector(','.join(map(str,v1)))
-    vect2=Vector(','.join(map(str,v2)))
-
-    a=str(np.cross(numpy_array_1,numpy_array_2))
-    a=list(a[1:-1].split(' '))
-    a=list(el for el in a if el!='')
-    assert str(vect1&vect2) == ','.join(a)
+@pytest.mark.parametrize('inp, exp',[(Vector(0, 12, 5).distance(), 13), (Vector(0, 0, 1).distance(), 1), (Vector(3, 4, 0).distance(), 5)])
+def test_vector_distance(inp, exp):
+    assert inp == exp
