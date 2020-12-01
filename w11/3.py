@@ -8,11 +8,21 @@ async def get_response(url):
         async with session.get(url) as response:
 
             html = await response.text()
-            lines = html.split('\n')
-            async with aiofile.AIOFile("found.txt", 'w') as found:
+            html = re.split(r'[\n]', html)
+            async with aiofile.async_open("found.txt", 'w+') as found:
                 for line in lines:
-                    if line.startswith("<>"):
-                        found.write(line)
+                    if line.startswith("<a >"):
+                        found.writer(line)
 
-async def go_url(urls):
-    #almost done, just need a little bit more time
+
+async def find_line(urls):
+#    async with aiofile.async_open(urls, 'r') as urlslist:
+    async for line in aiofile.LineReader(urls):
+        asyncio.ensure_future(fetch(line))
+
+
+if __name__ == "__main__":
+
+    loop = asyncio.get_event_loop()
+    with open('urls.txt', 'r') as urls:
+        loop.run_until_complete(find_line(urls))
