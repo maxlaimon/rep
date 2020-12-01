@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 
 
-async def get_response(url):
+async def get_resp(url):
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -11,11 +11,9 @@ async def get_response(url):
             return html
 
 
-async def main(n = 100): 
-    responses = [await get_response('http://127.0.0.1:8000') for i in range(n)]
-    print(*responses)
-
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(main(100))
+resps = [get_resp('http://127.0.0.1:8000') for _ in range(100)]
+done = loop.run_until_complete(asyncio.gather(*resps))
 loop.close()
+print(*done)
