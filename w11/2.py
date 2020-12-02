@@ -15,5 +15,16 @@ async def fetch_ip(service):
     async with aiohttp.ClientSession() as session:
         async with session.get(service.url) as response:
 
-            html = await response.text()
+            html = await response.json()
             return html
+
+
+
+async def asynchronous():
+    futs = [fetch_ip(service) for service in SERVICES]
+    done, pending = await asyncio.wait(futs, return_when = FIRST_COMPLETED)
+    (done.pop().result())
+
+
+ioloop = asyncio.get_event_loop()
+ioloop.run_until_complete(asynchronous())
