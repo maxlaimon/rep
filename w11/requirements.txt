@@ -1,0 +1,4 @@
+aiofile==3.3.3
+aiohttp==3.7.3
+fastapi==0.61.2
+uvicorn==0.12.3
